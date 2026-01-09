@@ -143,6 +143,32 @@
       width: 100%;
       height: auto;
       border-radius: 8px;
+      cursor: zoom-in; /* Kursor lupy */
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.03); /* Lekkie powiększenie przy najechaniu */
+    }
+
+    /* Styl dla okna powiększenia (Modal) */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(15, 23, 42, 0.95);
+      cursor: zoom-out;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .image-modal img {
+      max-width: 95%;
+      max-height: 95%;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      border: 2px solid #38bdf8;
     }
 
     .video-container {
@@ -200,6 +226,10 @@
   </style>
 </head>
 <body>
+
+  <div id="imageModal" class="image-modal">
+    <img id="modalImg" src="">
+  </div>
 
   <header>
     <h1>Maciej Franków</h1>
@@ -427,6 +457,23 @@ Enemies in the game are equipped with a simple AI system; they can patrol terrai
         parent.querySelector("#" + inner.dataset.inner).style.display = "block";
       };
     });
+
+    // LOGIKA POWIĘKSZANIA OBRAZKÓW (MODAL)
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+
+    // Dodaj zdarzenie kliknięcia do wszystkich obrazków w klasie .gallery
+    document.querySelectorAll(".gallery img").forEach(img => {
+      img.onclick = function() {
+        modal.style.display = "flex";
+        modalImg.src = this.src;
+      }
+    });
+
+    // Zamknij okno po kliknięciu w dowolne miejsce na modalu
+    modal.onclick = function() {
+      modal.style.display = "none";
+    };
   </script>
 </body>
 </html>
